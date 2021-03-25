@@ -121,11 +121,10 @@ export default {
     //3：只要是滚动，都侦测
     this.scroll = new BScroll(document.querySelector('.wrapper'),{
       probeType:2,
-      click:true,
       pullUpLoad:true,
     }),
-    this.scroll.on('scroll',()=>{
-
+    this.scroll.on('scroll',(position)=>{
+      // console.log(position);
     })
     this.scroll.on('pullingUp',()=>{
       console.log("上拉加载更多");
