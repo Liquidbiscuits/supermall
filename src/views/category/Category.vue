@@ -139,9 +139,9 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .wrapper {
-  height: 150px;
+  height: 475px;
   overflow: hidden;
   background-color: pink;
 }
