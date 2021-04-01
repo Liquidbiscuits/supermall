@@ -1,14 +1,20 @@
 <template>
-	<div v-if="Object.keys(detailInfo).length !== 0">
-		<div class="info-text-wrap">
-			<div class="text-top-style"></div>
-			<div class="desc info-text-desc">{{detailInfo.desc}}</div>
-			<div class="text-bot-style"></div>
+	<div v-if="Object.keys(goods).length !== 0">
+		<div class="title">{{goods.title}}</div>
+		<div class="price-wrap">
+			<div class="new-price">{{goods.price}}</div>
+			<div class="old-price">{{goods.oldPrice}}</div>
+			<div class="discount-desc" v-if="goods.discountDesc">{{goods.discountDesc}}</div>
 		</div>
-		<div class="img-list-wrap" v-for="item in detailInfo.detailImage">
-			<div class="desc">{{item.key}}</div>
-			<div v-for="(item, index) in item.list" :key="index">
-				<img :src="item" alt="" class="img" @load="imgLoad">
+		<div class="other-info">
+			<div>{{goods.columns[0]}}</div>
+			<div>{{goods.columns[1]}}</div>
+			<div>{{goods.services[goods.services.length-1].name}}</div>
+		</div>
+		<div class="serves-wrap">
+			<div v-for="index in goods.services.length-1" :key="index"> 
+				<img :src="goods.services[index-1].icon" alt=""> 
+				{{goods.services[index-1].name}}
 			</div>
 		</div>
 	</div>
@@ -16,73 +22,67 @@
 
 <script>
 	export default {
-		name: 'DetailGoodsInfo',
+		name: 'DetailBaseInfo',
 		props: {
-			detailInfo: {
+			goods: {
 				type: Object,
 				default() {
 					return {}
 				}
-			}
-		},
-		methods: {
-			imgLoad(){
-				this.$emit('imgLoad')
 			}
 		}
 	}
 </script>
 
 <style lang="less" scoped>
-	.info-text-wrap {
-		position: relative;
-		.text-top-style {
-			width: 60px;
-			height: 1px;
-			background-color: #333;
-			margin-left: 4px;
-			&::before{
-				    position: absolute;
-				    left: 4px;
-				    top: -2.5px;
-				    display: block;
-				    content: '';
-				    width: 5px;
-				    height: 5px;
-				    background-color: #333;
-			}
-		}
-		.text-bot-style {
-			width: 60px;
-			height: 1px;
-			background-color: #333;
-			position: absolute;
-			right: 4px;
-			bottom: 0;
-			&::after{
-				position: absolute;
-				right: 0;
-				top: -2.5px;
-				display: block;
-				content: '';
-				width: 5px;
-				height: 5px;
-				background-color: #333;
-			}
-		}
-		.info-text-desc {
-			padding: 10px 4px;
-		}
-	}
-	
-	.desc {
+	.title {
+		margin: 10px 0;
+		padding: 0 4px;
 		font-size: 14px;
-		padding-bottom: 6px;
 		line-height: 20px;
-		margin: 4px 0;
-		text-indent: 10px;
 	}
-	.img {
-		width: 100%;
+	.price-wrap {
+		display: flex;
+		padding:0 4px 10px;
+		.new-price {
+			color: var(--color-high-text)
+		}
+		.old-price {
+			color: #999;
+			font-size: 12px;
+			margin: 0 4px;
+			text-decoration: line-through;
+		}
+		.discount-desc {
+			color: #fff;
+			font-size: 12px;
+			border-radius: 100px;
+			padding: 2px 6px;
+			background-color: var(--color-high-text);
+		}
+	}
+	.other-info {
+		display: flex;
+		color: #999;
+		font-size: 12px;
+		padding: 10px 4px;
+		border-bottom: 1px solid #ededed;
+		border-top: 1px solid #ededed;
+		div {
+			flex: 1;
+		}
+	}
+	.serves-wrap {
+		display: flex;
+		font-size: 12px;
+		color: #333;
+		padding: 10px 4px;
+		justify-content: space-between;
+		border-bottom: 4px solid #ededed;
+		img {
+			width: 12px;
+			height: 12px;
+			vertical-align: middle;
+		}
 	}
 </style>
