@@ -39,7 +39,8 @@ import HomeSwiper from "./childComps/HomeSwiper.vue";
 import FeatureView from "./childComps/FeatureView.vue";
 
 import { getHomeMultidata, getHomeGoods } from "network/home";
-import { debounce } from "common/utils";
+
+import {itemListenerMixin} from "common/mixin.js"
 
 import NavBar from "components/common/navbar/NavBar.vue";
 import TabControl from "components/content/tabControl/TabControl.vue";
@@ -58,6 +59,7 @@ export default {
     Scroll,
     BackTop,
   },
+  mixins:[itemListenerMixin],
   data() {
     return {
       // result:null,
@@ -73,6 +75,7 @@ export default {
       tabOffsetTop: 0,
       isTabFixed: false,
       saveY: 0,
+      itemImgListener:null
     };
   },
   //组件加载完成时调用
@@ -84,13 +87,16 @@ export default {
     //监听图片加载完成
   },
   mounted() {
-    const refresh = debounce(this.$refs.scroll.refresh, 500);
+//!调用混入mixins
+
+    // const refresh = debouce(this.$refs.scroll.refresh, 100);
     //监听事件相关
-    this.$bus.$on("itemImageLoad", () => {
-      // console.log(".........");
-      // this.scroll && this.$refs.scroll.refresh();
-      refresh();
-    });
+    //对监听事件进行保存
+    // this.itemImgListener = () => {
+    //   refresh(20,30,'abc');
+    // }
+    //取消全局事件的监听
+    // this.$bus.$on("itemImageLoad", this.itemImgListener);
     //获取tabControl的offsetTop
     //所有的组件都有一个属性 $el:用于获取组件中的元素
   },
@@ -109,7 +115,11 @@ export default {
     },
     deactivated() {
       //离开页面时调用
-      // this.saveY = this.$refs.scroll.getScrollY();
+      //保存离开时的Y值
+      this.saveY = this.$refs.scroll.getScrollY();
+      this.$bus.$off('itemImgLoad')
+      //取消全局事件的监听 $off取消全部 $off("事件名",函数名)
+      // this.$bus.$off("itemImgLoad",this.itemImgListener)
     },
   },
   methods: {

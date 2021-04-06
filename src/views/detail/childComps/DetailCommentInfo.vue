@@ -1,9 +1,9 @@
 <template>
     <div v-if="Object.keys(commentInfo).length !==0" class="comment-info">
         <div class="info-header">
-            <div class="header-title">用户评价</div>
+            <div class="header-title">更多</div>
             <div class="header-more">
-                更多
+                用户评价
                 <i class="arrow-right"></i>
             </div>
         </div>

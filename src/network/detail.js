@@ -7,7 +7,12 @@ export function getDetail(iid) {
         }
     })
 }
-
+//获取商品页推荐数据
+export function getRecommend() {
+    return request ({
+        url:'/recommend'
+    })
+}
 export class Goods {
     constructor(itemInfo,columns,services) {
         this.title = itemInfo.title
@@ -33,7 +38,7 @@ export class Shop {
 }
 export class GoodsParam {
     constructor(info,rule) {
-        this.image = info.images ? info.image[0] : "";
+        this.image = info.images ? info.images[0] : "";
         this.infos = info.set;
         this.sizes = rule.tables
     }
