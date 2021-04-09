@@ -2,7 +2,7 @@ import {debouce} from "./utils.js"
 export const itemListenerMixin = {
     data() {
         return{
-            
+            itemImgListener:null,
         }
     },
     mounted() {
